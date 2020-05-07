@@ -1,4 +1,4 @@
-# vue-start
+# GreenIt
 
 ## Project setup
 ```
