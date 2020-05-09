@@ -1,28 +1,17 @@
 <template>
   <div id="app">
     <MainMenu/>
-    <Welcome/>
-    <About/>
-    <Gallery/>
-    <GreenScreenTool/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import MainMenu from './components/MainMenu.vue';
-import Welcome from './components/Welcome.vue';
-import About from './components/About.vue';
-import Gallery from './components/Gallery.vue';
-import GreenScreenTool from './components/GreenScreenTool.vue';
 
 export default {
   name: 'App',
   components: {
-    MainMenu,
-    Welcome,
-    About,
-    Gallery,
-    GreenScreenTool
+    MainMenu
   }
 }
 </script>
@@ -33,7 +22,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background: #2c3e50;
+  color: #ebf9f5;
   display: flex; 
   flex-direction: column;
   margin: 0;
