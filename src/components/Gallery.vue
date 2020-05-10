@@ -1,22 +1,27 @@
 <template>
     <section class="gallery">
-        <Title text="gallery" />
-        <div class="images">
-            <img src="@/assets/img/mountain1.jpg" />
-            <img src="@/assets/img/mountain2.jpg" />
-            <img src="@/assets/img/mountain3.jpg" />
-            <img src="@/assets/img/mountain4.jpg" />
-            <img src="@/assets/img/main.jpg" />
-            <img src="@/assets/img/mountain1.jpg" />
-        </div>
+        <SlideUpContainer>
+            <Title text="gallery" />
+            <div class="images">
+                <img src="@/assets/img/mountain1.jpg" />
+                <img src="@/assets/img/mountain2.jpg" />
+                <img src="@/assets/img/mountain3.jpg" />
+                <img src="@/assets/img/mountain4.jpg" />
+                <img src="@/assets/img/main.jpg" />
+                <img src="@/assets/img/mountain1.jpg" />
+            </div>
+        </SlideUpContainer>
     </section>
 </template>
 <script>
 import Title from './Title.vue';
+import SlideUpContainer from './SlideUpContainer.vue';
+
 export default {
     name: "Gallery",
     components: {
-        Title
+        Title,
+        SlideUpContainer
     }
 };
 </script>
