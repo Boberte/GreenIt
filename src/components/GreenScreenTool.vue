@@ -1,15 +1,20 @@
 <template>
     <div>
-        <Title text="GreenIt" />
-        <canvas ref="canvas" />
+        <SlideUpContainer>
+            <Title text="GreenIt" />
+            <canvas ref="canvas" />
+        </SlideUpContainer>
     </div>
 </template>
 <script>
 import Title from './Title.vue';
+import SlideUpContainer from './SlideUpContainer.vue';
+
 export default {
     name: "GreenScreenTool",
     components: {
-        Title
+        Title,
+        SlideUpContainer
     }
 };
 </script>

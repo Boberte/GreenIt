@@ -1,27 +1,32 @@
 <template>
     <section class="about">
-        <Title text="about" />
-        <p class="instructions">
-            Instructions:<br />
-            Connect a web camera.<br />
-            Stand in front of a green surface.<br />
-            Make the sillest face you can,<br />
-            and have fun:)<br />
-        </p>
-        <p class="conditions">
-            This site is for personal use only.
-        </p>
-        <p class="credits">
-            Built by Boberte.
-        </p>
+        <SlideUpContainer>
+            <Title text="about" />
+            <p class="instructions">
+                Instructions:<br />
+                Connect a web camera.<br />
+                Stand in front of a green surface.<br />
+                Make the sillest face you can,<br />
+                and have fun:)<br />
+            </p>
+            <p class="conditions">
+                This site is for personal use only.
+            </p>
+            <p class="credits">
+                Built by Boberte.
+            </p>
+        </SlideUpContainer>
     </section>
 </template>
 <script>
 import Title from './Title.vue';
+import SlideUpContainer from './SlideUpContainer.vue';
+
 export default {
     name: "About",
     components: {
-        Title
+        Title,
+        SlideUpContainer
     }
 };
 </script>

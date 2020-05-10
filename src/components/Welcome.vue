@@ -1,43 +1,43 @@
 <template>
     <section class="welcome">
-        <Title text="welcome!" />
-        <p>
-            In this lovely site you can take a photo and replace all green
-            background to any image you like! Enjoy:)
-        </p>
+        <SlideUpContainer class="slide-up">
+            <Title text="welcome!" />
+            <p>
+                In this lovely site you can take a photo and replace all green
+                background to any image you like! Enjoy:)
+            </p>
+        </SlideUpContainer>
     </section>
 </template>
 <script>
 import Title from "./Title.vue";
+import SlideUpContainer from './SlideUpContainer.vue';
+
 export default {
     name: "Welcome",
     components: {
-        Title
+        Title,
+        SlideUpContainer
     }
 };
 </script>
 <style scoped lang="scss">
 .welcome {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     flex-grow: 1;
-    margin-top: 100px;
-    opacity: 0;
-    animation: slideUp 1s 0.5s 1 forwards;
     flex-basis: 80vh;
-    
-    p {
-        width: 40%;
-        font-size: 20px;
-        line-height: 1.5;
-    }
+    display: flex;
 
-    @keyframes slideUp {
-        100% {
-            opacity: 1;
-            margin: 0;
+    .slide-up{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+
+        p {
+            width: 40%;
+            font-size: 20px;
+            line-height: 1.5;
         }
     }
 }
