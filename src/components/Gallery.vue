@@ -1,6 +1,6 @@
 <template>
     <section class="gallery">
-        <div class="title">Gallery</div>
+        <Title text="gallery" />
         <div class="images">
             <img src="@/assets/img/mountain1.jpg" />
             <img src="@/assets/img/mountain2.jpg" />
@@ -12,20 +12,18 @@
     </section>
 </template>
 <script>
+import Title from './Title.vue';
 export default {
-    name: "Gallery"
+    name: "Gallery",
+    components: {
+        Title
+    }
 };
 </script>
 <style scoped lang="scss">
 .gallery {
     flex-basis: 80vh;
     flex-grow: 1;
-
-    .title {
-        font-weight: bold;
-        font-size: 45px;
-        margin: 50px 0 20px;
-    }
 
     .images {
         display: flex;

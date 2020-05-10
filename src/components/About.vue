@@ -1,12 +1,12 @@
 <template>
     <section class="about">
-        <div class="title">About</div>
+        <Title text="about" />
         <p class="instructions">
             Instructions:<br />
             Connect a web camera.<br />
             Stand in front of a green surface.<br />
             Make the sillest face you can,<br />
-            And have fun:)<br />
+            and have fun:)<br />
         </p>
         <p class="conditions">
             This site is for personal use only.
@@ -17,8 +17,12 @@
     </section>
 </template>
 <script>
+import Title from './Title.vue';
 export default {
     name: "About",
+    components: {
+        Title
+    }
 };
 </script>
 <style scoped lang="scss">
@@ -29,11 +33,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    .title {
-        font-weight: bold;
-        font-size: 45px;
-    }
 
     .instructions {
         font-size: 22px;
