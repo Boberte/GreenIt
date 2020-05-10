@@ -1,6 +1,6 @@
 <template>
     <section class="welcome">
-        <div class="title">Welcome!</div>
+        <Title text="welcome!" />
         <p>
             In this lovely site you can take a photo and replace all green
             background to any image you like! Enjoy:)
@@ -8,8 +8,12 @@
     </section>
 </template>
 <script>
+import Title from "./Title.vue";
 export default {
-    name: "Welcome"
+    name: "Welcome",
+    components: {
+        Title
+    }
 };
 </script>
 <style scoped lang="scss">
@@ -23,12 +27,7 @@ export default {
     opacity: 0;
     animation: slideUp 1s 0.5s 1 forwards;
     flex-basis: 80vh;
-
-    .title {
-        font-weight: bold;
-        font-size: 45px;
-    }
-
+    
     p {
         width: 40%;
         font-size: 20px;
