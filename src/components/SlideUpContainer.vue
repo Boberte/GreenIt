@@ -12,7 +12,7 @@ export default {
     .slide-up {
         margin-top: 100px;
         opacity: 0;
-        animation: slideUp 1s 0.5s 1 forwards;
+        animation: slideUp 1s 0.2s forwards;
     }
 
     @keyframes slideUp {

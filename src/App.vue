@@ -39,10 +39,10 @@ export default {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2c3e50;
+    background: #1f3041;
     border-radius: 5px;
       &:hover {
-        background:#1f3041;
+        background:#172533;
       }
   }
 
