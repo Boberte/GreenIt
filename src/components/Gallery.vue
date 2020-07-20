@@ -3,29 +3,9 @@
     <SlideUpContainer>
       <Title text="gallery" />
       <div class="images">
-        <div class="img-container">
-          <img src="@/assets/img/mountain1.jpg" />
-          <div><span>mountain1</span></div>
-        </div>
-        <div class="img-container">
-          <img src="@/assets/img/mountain2.jpg" />
-          <div><span>mountain2</span></div>
-        </div>
-        <div class="img-container">
-          <img src="@/assets/img/mountain3.jpg" />
-          <div><span>mountain3</span></div>
-        </div>
-        <div class="img-container">
-          <img src="@/assets/img/mountain4.jpg" />
-          <div><span>mountain4</span></div>
-        </div>
-        <div class="img-container">
-          <img src="@/assets/img/main.jpg" />
-          <div><span>main</span></div>
-        </div>
-        <div class="img-container">
-          <img src="@/assets/img/mountain1.jpg" />
-          <div><span>mountain1</span></div>
+        <div v-for="(img, index) in images" :key="index" class="img-container">
+          <img :src="img.path" />
+          <div><span>{{img.name}}</span></div>
         </div>
       </div>
     </SlideUpContainer>
@@ -34,12 +14,21 @@
 <script>
 import Title from "./Title.vue";
 import SlideUpContainer from "./SlideUpContainer.vue";
+import {getGallery} from "../services/api";
 
 export default {
   name: "Gallery",
   components: {
     Title,
     SlideUpContainer
+  },
+  data(){
+    return {
+      images: []
+    };
+  },
+  async created(){
+    this.images = await getGallery();
   }
 };
 </script>
@@ -89,6 +78,7 @@ export default {
         opacity: 0;
         color: #2c3e50;
         transition: all 0.5s ease-in;
+        margin-top: 50px;
 
         span {
             padding: 20px;
@@ -104,6 +94,7 @@ export default {
 
           div {
               opacity: 1;
+              margin-top:0;
           }
       }
     }
