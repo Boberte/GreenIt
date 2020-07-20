@@ -57,7 +57,6 @@ export default {
     },
     streamToCanvas() {
       this.streamInterval = setInterval(() => {
-        console.log("4455");
         this.ctx.drawImage(this.$refs.video, 0, 0);
         const imageData = this.ctx.getImageData(
           0,
