@@ -11,18 +11,22 @@
         autoplay
         class="hidden"
       ></video>
+      <CaptureButton @click="capture"/>
     </SlideUpContainer>
   </div>
 </template>
 <script>
 import Title from "./Title.vue";
 import SlideUpContainer from "./SlideUpContainer.vue";
+import CaptureButton from "./CaptureButton";
+import {saveImage} from '../services/api';
 
 export default {
   name: "GreenScreenTool",
   components: {
     Title,
-    SlideUpContainer
+    SlideUpContainer,
+    CaptureButton
   },
   data() {
     return {
@@ -82,6 +86,19 @@ export default {
         }
         this.resCtx.putImageData(imageData, 0, 0);
       }, 100);
+    },
+    async capture(){
+      const img = this.$refs.resCanvas.toDataURL("image/png");
+      try {
+        const res = await saveImage(img);
+        if(res.status === 200){
+          console.log(res.data.fileName);
+        } else {
+          // TODO
+        }
+      } catch (err) {
+        // TODO
+      }
     }
   }
 };
@@ -97,5 +114,6 @@ export default {
 
 canvas {
   background: rgb(255, 251, 192);
+  border-radius: 1rem;
 }
 </style>

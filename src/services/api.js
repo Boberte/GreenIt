@@ -26,8 +26,8 @@ async function getBackgrouds() {
     }
 }
 
-function saveImage(){
-
+async function saveImage(imageData){
+    return await axios.post(`${process.env.VUE_APP_SERVER}/gallery`, {imageData});
 }
 
 function addBackground(){
