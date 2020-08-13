@@ -1,6 +1,6 @@
 <template>
-  <div class="img-container">
-    <img :src="src" />
+  <div class="img-container" @click="$emit('click')">
+    <img :src="src" crossorigin="anonymous"/>
     <div v-if="text">
       <span>{{text}}</span>
     </div>
@@ -22,7 +22,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .img-container {
-  height: 250px;
+  max-height: 250px;
   flex-grow: 1;
   box-shadow: 3px 2px #00000030;
   border-radius: 5px;

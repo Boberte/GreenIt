@@ -2,8 +2,11 @@
   <div>
     <SlideUpContainer>
       <Title text="GreenIt" />
-      <canvas ref="resCanvas" />
-      <canvas ref="canvas" class="hidden" />
+      <BackgroundSelector @select="updateBackground" />
+      <img ref="renderedImage" class="hidden" />
+      <canvas ref="striptedImageCanvas" class="hidden" />
+      <canvas ref="videoStreamCanvas" class="hidden" />
+      <canvas ref="resultCanvas"/>
       <video
         @play="streamToCanvas"
         @loadedmetadata="configureStream"
@@ -11,7 +14,7 @@
         autoplay
         class="hidden"
       ></video>
-      <CaptureButton @click="capture"/>
+      <CaptureButton @click="capture" />
     </SlideUpContainer>
   </div>
 </template>
@@ -19,29 +22,34 @@
 import Title from "./Title.vue";
 import SlideUpContainer from "./SlideUpContainer.vue";
 import CaptureButton from "./CaptureButton";
-import {saveImage} from '../services/api';
+import BackgroundSelector from "./BackgroundSelector";
+import { saveImage } from "../services/api";
 
 export default {
   name: "GreenScreenTool",
   components: {
     Title,
     SlideUpContainer,
-    CaptureButton
+    CaptureButton,
+    BackgroundSelector,
   },
   data() {
     return {
-      ctx: null,
-      resCtx: null,
-      streamInterval: null
+      videoStreamCtx: null,
+      stripedImgCtx: null,
+      resultCtx: null,
+      streamInterval: null,
+      backgroundImage: null,
     };
   },
   async mounted() {
-    this.ctx = this.$refs.canvas.getContext("2d");
-    this.resCtx = this.$refs.resCanvas.getContext("2d");
+    this.videoStreamCtx = this.$refs.videoStreamCanvas.getContext("2d");
+    this.stripedImgCtx = this.$refs.striptedImageCanvas.getContext("2d");
+    this.resultCtx = this.$refs.resultCanvas.getContext("2d");
     if (navigator.mediaDevices.getUserMedia) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
+          video: true,
         });
         this.$refs.video.srcObject = stream;
       } catch (error) {
@@ -54,19 +62,19 @@ export default {
   },
   methods: {
     configureStream() {
-      this.$refs.canvas.width = this.$refs.resCanvas.width =
+      this.$refs.videoStreamCanvas.width = this.$refs.striptedImageCanvas.width = this.$refs.resultCanvas.width = this.$refs.striptedImageCanvas.width = this.$refs.renderedImage.width =
         this.$refs.video.clientWidth * window.devicePixelRatio;
-      this.$refs.canvas.height = this.$refs.resCanvas.height =
+      this.$refs.videoStreamCanvas.height = this.$refs.striptedImageCanvas.height = this.$refs.resultCanvas.height = this.$refs.striptedImageCanvas.height = this.$refs.renderedImage.height =
         this.$refs.video.clientHeight * window.devicePixelRatio;
     },
     streamToCanvas() {
       this.streamInterval = setInterval(() => {
-        this.ctx.drawImage(this.$refs.video, 0, 0);
-        const imageData = this.ctx.getImageData(
+        this.videoStreamCtx.drawImage(this.$refs.video, 0, 0);
+        const imageData = this.videoStreamCtx.getImageData(
           0,
           0,
-          this.$refs.canvas.width,
-          this.$refs.canvas.height
+          this.$refs.videoStreamCanvas.width,
+          this.$refs.videoStreamCanvas.height
         );
 
         let r, g, b;
@@ -75,8 +83,8 @@ export default {
           g = imageData.data[i * 4 + 1];
           b = imageData.data[i * 4 + 2];
           if (
-            g > 60 && ((g - r > 15 && g - b > 15 && b > 35 && r > 35) ||
-            r + b < g)
+            g > 60 &&
+            ((g - r > 15 && g - b > 15 && b > 35 && r > 35) || r + b < g)
           ) {
             imageData.data[i * 4 + 3] = 0;
           }
@@ -84,14 +92,34 @@ export default {
             imageData.data[i * 4 + 3] = 0.4;
           }
         }
-        this.resCtx.putImageData(imageData, 0, 0);
+
+        this.stripedImgCtx.putImageData(imageData, 0, 0);
+        const img = this.$refs.striptedImageCanvas.toDataURL("image/png");
+        this.$refs.renderedImage.src = img;
+        this.$refs.renderedImage.onload = () => {
+          this.backgroundImage &&
+            this.resultCtx.drawImage(
+              this.backgroundImage,
+              0,
+              0,
+              this.$refs.videoStreamCanvas.width,
+              this.$refs.videoStreamCanvas.height
+            );
+          this.resultCtx.drawImage(
+            this.$refs.renderedImage,
+            0,
+            0,
+            this.$refs.videoStreamCanvas.width,
+            this.$refs.videoStreamCanvas.height
+          );
+        };
       }, 100);
     },
-    async capture(){
-      const img = this.$refs.resCanvas.toDataURL("image/png");
+    async capture() {
+      const img = this.$refs.resultCanvas.toDataURL("image/png"); 
       try {
         const res = await saveImage(img);
-        if(res.status === 200){
+        if (res.status === 200) {
           console.log(res.data.fileName);
         } else {
           // TODO
@@ -99,8 +127,11 @@ export default {
       } catch (err) {
         // TODO
       }
-    }
-  }
+    },
+    updateBackground(image) {
+      this.backgroundImage = image;
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
