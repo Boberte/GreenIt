@@ -6,7 +6,7 @@
       <img ref="renderedImage" class="hidden" />
       <canvas ref="striptedImageCanvas" class="hidden" />
       <canvas ref="videoStreamCanvas" class="hidden" />
-      <canvas ref="resultCanvas"/>
+      <canvas ref="resultCanvas" />
       <video
         @play="streamToCanvas"
         @loadedmetadata="configureStream"
@@ -97,7 +97,7 @@ export default {
         const img = this.$refs.striptedImageCanvas.toDataURL("image/png");
         this.$refs.renderedImage.src = img;
         this.$refs.renderedImage.onload = () => {
-          this.backgroundImage &&
+          this.backgroundImage &&  this.$refs.videoStreamCanvas && 
             this.resultCtx.drawImage(
               this.backgroundImage,
               0,
@@ -105,18 +105,19 @@ export default {
               this.$refs.videoStreamCanvas.width,
               this.$refs.videoStreamCanvas.height
             );
-          this.resultCtx.drawImage(
-            this.$refs.renderedImage,
-            0,
-            0,
-            this.$refs.videoStreamCanvas.width,
-            this.$refs.videoStreamCanvas.height
-          );
+          this.$refs.videoStreamCanvas &&
+            this.resultCtx.drawImage(
+              this.$refs.renderedImage,
+              0,
+              0,
+              this.$refs.videoStreamCanvas.width,
+              this.$refs.videoStreamCanvas.height
+            );
         };
       }, 100);
     },
     async capture() {
-      const img = this.$refs.resultCanvas.toDataURL("image/png"); 
+      const img = this.$refs.resultCanvas.toDataURL("image/png");
       try {
         const res = await saveImage(img);
         if (res.status === 200) {
